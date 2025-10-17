@@ -1,0 +1,48 @@
+<h1>Formulaire d'ajout</h1>
+<form method="post">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="errors">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <p>
+        {{ form.name.label_tag }}<br>
+        {{ form.name }}
+        {{ form.name.errors }}
+    </p>
+
+    <p>
+        {{ form.theme.label_tag }}<br>
+        {{ form.theme }}
+        {{ form.theme.errors }}
+    </p>
+
+    <p>
+        {{ form.location.label_tag }}<br>
+        {{ form.location }}
+        {{ form.location.errors }}
+    </p>
+
+    <p>
+        {{ form.description.label_tag }}<br>
+        {{ form.description }}
+        {{ form.description.errors }}
+    </p>
+
+    <p>
+        {{ form.start_date.label_tag }}<br>
+        <input type="date" name="start_date" id="id_start_date" value="{{ form.start_date.value }}">
+        {{ form.start_date.errors }}
+    </p>
+
+    <p>
+        {{ form.end_date.label_tag }}<br>
+        <input type="date" name="end_date" id="id_end_date" value="{{ form.end_date.value }}">
+        {{ form.end_date.errors }}
+    </p>
+
+    <button type="submit">Enregistrer</button>
+</form>

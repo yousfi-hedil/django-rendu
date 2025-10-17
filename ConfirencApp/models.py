@@ -3,6 +3,7 @@ from django.core.validators import MaxLengthValidator
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinLengthValidator , FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 from datetime import date
 import random 
 import string 
@@ -47,12 +48,30 @@ class Confirence(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def clean(self):
         # Validation : start_date doit être <= end_date
+        # Protéger contre des valeurs manquantes ou invalides (ex: None ou chaînes)
+        if self.start_date is None or self.end_date is None:
+            # Laisser la validation de champ gérer les valeurs manquantes/invalides
+            return super().clean()
+
+        # Vérifier que ce sont bien des objets date
+        if not isinstance(self.start_date, date) or not isinstance(self.end_date, date):
+            # lever une ValidationError structurée pour que le formulaire affiche bien les erreurs
+            raise ValidationError({
+                'start_date': _('La date de début est invalide.'),
+                'end_date': _('La date de fin est invalide.'),
+            })
+
         if self.start_date > self.end_date:
             raise ValidationError("La date de début de la conférence doit être inférieure ou égale à la date de fin.")
+
         super().clean()
     
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        """Retourne l'URL de la page de détails pour cette conférence."""
+        return reverse('details_confirence', args=[self.pk])
 
    
 class Submission(models.Model):

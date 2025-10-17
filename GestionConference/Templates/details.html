@@ -1,0 +1,16 @@
+<h1>Détails conférence : {{ confirence.name }}</h1>
+
+<ul>
+	<li><strong>Thème :</strong> {{ confirence.theme }}</li>
+	<li><strong>Lieu :</strong> {{ confirence.location }}</li>
+	<li><strong>Description :</strong> {{ confirence.description }}</li>
+	<li><strong>Dates :</strong> {{ confirence.start_date }} - {{ confirence.end_date }}</li>
+	<li><strong>Créée le :</strong> {{ confirence.created_at }}</li>
+	<li><strong>Mis à jour le :</strong> {{ confirence.updated_at }}</li>
+</ul>
+
+<p>
+	<a href="{% url 'liste_confirences' %}">← Retour à la liste</a>
+	|
+	<a href="{% url 'ajouter_confirence' %}">Ajouter une conférence</a>
+</p>

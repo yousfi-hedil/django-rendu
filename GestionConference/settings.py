@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'UserApp',
     'ConfirencApp',
+
     'SessionApp'
 ]
 
@@ -57,8 +58,8 @@ ROOT_URLCONF = 'GestionConference.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "GestionConference" / "Templates"],
-        'APP_DIRS': True,
+# settings.py - Correction A
+        'DIRS': [BASE_DIR / "GestionConference" / "Templates"],        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
@@ -68,6 +69,10 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
+
 
 WSGI_APPLICATION = 'GestionConference.wsgi.application'
 
