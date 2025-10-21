@@ -1,14 +1,35 @@
 <h1>La liste des conférences</h1>
-<table border="1">
 
-    <tr><td>Title</td><td>Theme</td> <td>Date de conférences</td><td>Actions</td></tr>
-  
-    {% for c in liste %}
-    <tr>
-        <td>{{ c.name }}</td>
-        <td>{{c.theme}}</td>
-        <td>{{c.start_date}} - {{c.end_date}}</td>
-    <td><a href="{{ c.get_absolute_url }}">Détails</a></td>
-    </tr>
-    {% endfor %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Thème</th>
+            <th>Dates de conférences</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for conf in liste %}
+        <tr>
+            <td>{{ conf.titre }}</td>
+            <td>{{ conf.theme }}</td>
+            <td>{{ conf.start_date|date:"Y-m-d" }} - {{ conf.end_date|date:"Y-m-d" }}</td>
+            
+            <td>
+                <a href="{% url 'details_confirence' pk=conf.pk %}">Détails</a> | 
+                <a href="{% url 'modifier_confirence' pk=conf.pk %}">Modifier</a> | 
+                <a href="{% url 'supprimer_confirence' pk=conf.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Aucune conférence n'est disponible pour le moment.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
+<p>
+    <a href="{% url 'creer_confirence' %}">Créer une nouvelle conférence</a>
+</p>
