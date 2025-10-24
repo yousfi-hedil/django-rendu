@@ -1,12 +1,12 @@
-# GestionConference/urls.py (à mettre à jour)
+# GestionConference/urls.py
 
 from django.contrib import admin
-from django.urls import path, include  # ⚠️ Assurez-vous d'importer 'include'
+from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # AJOUTEZ CETTE LIGNE : 
-    # Ceci mappe toutes les URLs de l'application 'ConfirencApp'
-    # pour commencer par le préfixe 'conference/'.
-    path('conference/', include('ConfirencApp.urls')), 
+    path('conference/', include('ConfirencApp.urls')),
+    path('', RedirectView.as_view(url='/conference/liste/')),  # Redirige la racine vers la liste des conférences
+    path('users/', include('UserApp.urls')),  # URLs de l'application UserApp
 ]

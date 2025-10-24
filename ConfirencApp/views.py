@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .models import Confirence  # ⚠️ Ton modèle s'appelle "Confirence", pas "Conference"
-
+from .forms import ConferenceForm   
 
 # --- Vue fonctionnelle : liste des conférences ---
 def liste_confirences(request):
@@ -34,7 +34,8 @@ class ConfirenceCreate(CreateView):
     model = Confirence
     # utilise le template form.html présent dans le dossier Templates
     template_name = "form.html"
-    fields = "__all__"
+    # fields = "__all__"
+    form_class = ConferenceForm  # Utilisation du formulaire personnalisé
     success_url = reverse_lazy("liste_confirences")
 # --- Vue générique : suppression d'une conférence (DeleteView) ---
 class ConfirenceDelete(DeleteView):
@@ -48,7 +49,8 @@ class ConfirenceUpdate(UpdateView):
     model = Confirence
     # On réutilise souvent le même template de formulaire que pour la création
     template_name = "form.html"
-    fields = "__all__"
+    # fields = "__all__"
+    form_class = ConferenceForm  # Utilisation du formulaire personnalisé
     # Redirige vers les détails de la conférence modifiée (vous pouvez aussi utiliser 'liste_confirences')
     # Attention, si vous utilisez 'details_confirence', il faudra que l'URL soit nommée ainsi
     # Ici, je mets 'liste_confirences' pour simplifier :

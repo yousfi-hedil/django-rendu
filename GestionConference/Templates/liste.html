@@ -1,9 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <h1>La liste des conférences</h1>
 
 <table border="1">
     <thead>
         <tr>
-            <th>Titre</th>
+            <th>Nom</th>
             <th>Thème</th>
             <th>Dates de conférences</th>
             <th>Actions</th>
@@ -12,7 +16,7 @@
     <tbody>
         {% for conf in liste %}
         <tr>
-            <td>{{ conf.titre }}</td>
+            <td>{{ conf.name }}</td>
             <td>{{ conf.theme }}</td>
             <td>{{ conf.start_date|date:"Y-m-d" }} - {{ conf.end_date|date:"Y-m-d" }}</td>
             
@@ -33,3 +37,4 @@
 <p>
     <a href="{% url 'creer_confirence' %}">Créer une nouvelle conférence</a>
 </p>
+{% endblock %}

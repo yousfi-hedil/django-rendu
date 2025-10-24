@@ -1,0 +1,3 @@
+urlspatterns = [
+    # ... tes autres URL patterns ...   
+    path('papers/', include('papers.urls')),  # Inclure les URLs de l'application 'papers'

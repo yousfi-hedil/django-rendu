@@ -1,13 +1,56 @@
-<h1>Formulaire d'ajout</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% comment %} 
+    NOTE: Pour que cette interface soit unifiée, votre vue Django doit 
+    déterminer si vous êtes en mode 'ajout' ou 'modification' et passer 
+    une variable de contexte (ex: is_edit_mode = True/False) au template.
+{% endcomment %}
+
+{% load static %}
+
+<style>
+    /* Style pour les erreurs de formulaire, si non déjà défini */
+    .errors {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+    ul.errorlist {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 0.5em;
+    }
+    ul.errorlist li {
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
+
+{% comment %} 
+    La condition 'if is_edit_mode' permet de changer le titre et le texte du bouton. 
+    Remplacez 'is_edit_mode' par la variable de contexte appropriée de votre vue.
+{% endcomment %}
+{% if view.object.pk %}
+
+<h1>formulaire de modif de  {{object.name}}</h1>
+{% else %}
+<h1>formulaire d'ajout de conférence</h1>
+{% endif %}
 <form method="post">
     {% csrf_token %}
 
+    {% comment %} Afficher les erreurs qui ne sont liées à aucun champ spécifique {% endcomment %}
     {% if form.non_field_errors %}
         <div class="errors">
+            <p>Veuillez corriger les erreurs suivantes :</p>
             {{ form.non_field_errors }}
         </div>
     {% endif %}
 
+    {% comment %} Champs 'name', 'theme', 'location', 'description' {% endcomment %}
+    {% comment %} Ces champs utilisent la méthode standard de rendu (label_tag et rendu direct) {% endcomment %}
     <p>
         {{ form.name.label_tag }}<br>
         {{ form.name }}
@@ -32,22 +75,33 @@
         {{ form.description.errors }}
     </p>
 
+    {% comment %} Champs de date: utiliser le rendu standard de Django pour une meilleure intégration 
+    avec les widgets du formulaire, y compris les types d'input. 
+    Si votre champ de formulaire Django est défini comme DateField et utilise 
+    un widget de type DateInput, il affichera automatiquement <input type="date">.
+    Nous conservons cependant la structure pour afficher séparément les labels, champs et erreurs.
+    {% endcomment %}
+
     <p>
         {{ form.start_date.label_tag }}<br>
-        <input type="date" name="start_date" id="id_start_date" value="{{ form.start_date.value }}">
+        {{ form.start_date }}
         {{ form.start_date.errors }}
     </p>
 
     <p>
         {{ form.end_date.label_tag }}<br>
-        <input type="date" name="end_date" id="id_end_date" value="{{ form.end_date.value }}">
+        {{ form.end_date }}
         {{ form.end_date.errors }}
     </p>
 
-    <button type="submit">Enregistrer</button>
+    {% comment %} Le texte du bouton change en fonction du mode (ajout ou modification) {% endcomment %}
+    <button type="submit">
+        {% if is_edit_mode %}
+            Enregistrer les modifications
+        {% else %}
+            Enregistrer
+        {% endif %}
+    </button>
 </form>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }} <button type="submit">Enregistrer les modifications</button>
-</form>
+{% endblock %}

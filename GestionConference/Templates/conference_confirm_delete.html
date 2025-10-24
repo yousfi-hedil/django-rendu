@@ -1,8 +1,0 @@
-<h2>Confirmer la suppression</h2>
-
-<p>Êtes-vous sûr de vouloir supprimer la conférence : <strong>{{ object.titre_ou_un_champ }}</strong> ?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Oui, supprimer</button>
-    <a href="{% url 'liste_confirences' %}">Annuler</a>
-</form>

@@ -1,3 +1,8 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
 <h1>Détails conférence : {{ confirence.name }}</h1>
 
 <ul>
@@ -14,3 +19,5 @@
 	|
 	<a href="{% url 'ajouter_confirence' %}">Ajouter une conférence</a>
 </p>
+
+{% endblock %}
